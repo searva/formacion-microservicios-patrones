@@ -1,0 +1,18 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.in28minutes.microservices</groupId>
+  <artifactId>simple-multi</artifactId>
+  <version>1.0</version>
+  <packaging>pom</packaging>
+  <modules>
+      <module>../currency-conversion-service</module>
+      <module>../currency-exchange-service</module>
+      <module>../limits-service</module>
+      <module>../netflix-zuul-api-gateway-server</module>
+      <module>../netflix-eureka-naming-server</module>
+      <module>../spring-cloud-config-server</module>
+      <module>../spring-security-sso-ui</module>
+      <module>../oauth-authorization-server</module>
+  </modules>
+</project>

@@ -16,17 +16,17 @@
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-			<name>org.eclipse.m2e.core.maven2Builder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-		<buildCommand>
 			<name>org.springframework.ide.eclipse.core.springbuilder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
 		<buildCommand>
 			<name>org.springframework.ide.eclipse.boot.validation.springbootbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.m2e.core.maven2Builder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
@@ -41,7 +41,7 @@
 		<link>
 			<name>git-localconfig-repo</name>
 			<type>2</type>
-			<location>C:/Users/0003805/workspace-spring-microservices/spring-microservices/03.microservices/git-localconfig-repo</location>
+			<location>/home/sergio/C::/Users/0003805/workspace-spring-microservices/spring-microservices/03.microservices/git-localconfig-repo</location>
 		</link>
 	</linkedResources>
 </projectDescription>
