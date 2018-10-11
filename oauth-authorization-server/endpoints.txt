@@ -1,0 +1,1 @@
+localhost:9999/oauth/authorize?response_type=code&client_id=fooClientIdPassword&redirect_uri=http://localhost:8089/
