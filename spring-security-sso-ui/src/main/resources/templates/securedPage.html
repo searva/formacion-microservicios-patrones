@@ -6,13 +6,32 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
 </head>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
 <body>
-<div class="container">
-	<div class="col-sm-12">
-		<h1>Secured Page</h1>
-		Welcome, <span th:text="${#authentication.name}">Name</span>
+	<div class="container">
+		<div class="col-sm-12">
+			<h1>Secured Page</h1>
+			Welcome, <span th:text="${#authentication.name}">Name</span>
+		</div>
+		
+		<div  style="margin-top: 120px;">
+			<span>Current limits:</span>
+			<div>
+				<textarea id="LimitsMessage" rows="10" cols="40"></textarea>
+			</div>
+			<script type="text/javascript">
+				$(document).ready(function() {
+					$.ajax({
+						url : "/ui/limits"
+					}).then(function(data) {
+						console.log(data);
+						$("textarea#LimitsMessage").val(JSON.stringify(data, undefined, 2));
+					});
+				});
+			</script>
+		</div>
 	</div>
-</div>
 </body>
 </html>
