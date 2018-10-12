@@ -8,7 +8,7 @@ security:
     client:
       clientId: fooClientIdPassword
       clientSecret: secret
-      accessTokenUri: http://localhost:9999/oauth/token
+      accessTokenUri: http://${OAUTH2_SERVER_HOST:localhost}:9999/oauth/token
       userAuthorizationUri: http://localhost:9999/oauth/authorize
     resource:
       userInfoUri: http://localhost:9999/user
@@ -18,4 +18,4 @@ spring:
   thymeleaf:
     cache: false 
     
-limits-service.endpoint: http://localhost:8080/limits  
+limits-service.endpoint: http://${LIMITS_SERVICE_HOST:localhost}:8080/limits  

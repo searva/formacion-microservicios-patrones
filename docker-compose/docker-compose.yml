@@ -3,102 +3,50 @@ services:
   rabbitmq:
     image: rabbitmq:management
     ports:
-      - "5672:5672" 
-      - "15672:15672" #Management Port - default user:pass = guest:guest
-      
-  zipkin :
-    image: openzipkin/zipkin
-    ports:
-      - "9411:9411"
-    links:
-      - rabbitmq
-    environment:
-      - RABBIT_URI=amqp://rabbitmq
-    depends_on:
-      - rabbitmq
-  
-  eureka:
-    image: searva/netflix-eureka-naming-server:0.0.1-SNAPSHOT
-    hostname: eureka
-    ports:
-      - "8761:8761"
-      
-  exchange-service:
-    image: searva/currency-exchange-service:0.0.1-SNAPSHOT
-    links:
-      - eureka
-      - rabbitmq
-    ports:
-      - "8000:8000"
-    depends_on:
-      - eureka
-    environment:
-      - SPRING_RABBITMQ_HOST=rabbitmq
-      - EUREKA_HOST=eureka
-      
-  conversion-service:
-    image: searva/currency-conversion-service:0.0.1-SNAPSHOT
-    links:
-      - eureka
-      - rabbitmq
-    ports:
-      - "8100:8100"
-    depends_on:
-      - eureka
-    environment:
-      - SPRING_RABBITMQ_HOST=rabbitmq
-      - EUREKA_HOST=eureka
-      
-  zuul-service:
-    image: searva/netflix-zuul-api-gateway-server:0.0.1-SNAPSHOT
-    links:
-      - eureka
-      - rabbitmq  
-    ports:
-      - "8765:8765"
-    depends_on:
-      - eureka
-    environment:
-      - SPRING_RABBITMQ_HOST=rabbitmq
-      - EUREKA_HOST=eureka
-      
-  limits-service:
-    image: searva/limits-service:0.0.1-SNAPSHOT
-    links:
-      - rabbitmq
-      - configuration-service
-    ports:
-      - "8080:8080"
-    depends_on:
-      - rabbitmq
-      - oauth-server
-    environment:
-      - SPRING_RABBITMQ_HOST=rabbitmq
-      - CONFIGURATION_HOST=configuration-service
-      
+    - 5672:5672
+    - 15672:15672
+    
   configuration-service:
     image: searva/spring-cloud-config-server:0.0.1-SNAPSHOT
     volumes:
-      - ./home/sergio/git-localconfig-repo:/git-localconfig-repo
+    - /home/sergio/git-localconfig-repo:/git-localconfig-repo
     ports:
-      - "8888:8888"
-  
+    - 8888:8888
+    links:
+    - rabbitmq
+    depends_on:
+    - rabbitmq
+    environment:
+    - SPRING_RABBITMQ_HOST=rabbitmq
+    
   oauth-server:
     image: searva/oauth-authorization-server:0.0.1-SNAPSHOT
     ports:
-      - "9999:9999"   
-  
+    - 9999:9999
+    
+  limits-service:
+    image: searva/limits-service:0.0.1-SNAPSHOT
+    links:
+    - rabbitmq
+    - configuration-service
+    depends_on:
+    - rabbitmq
+    - oauth-server
+    - configuration-service
+    environment:
+    - SPRING_RABBITMQ_HOST=rabbitmq
+    - CONFIGURATION_HOST=configuration-service
+    
   app-ui:
     image: searva/spring-security-sso-ui:0.0.1-SNAPSHOT
     ports:
-      - "8089:8089"
+    - 8089:8089
+    links:
+    - oauth-server
+    - limits-service
     depends_on:
-      - oauth-server
-    
-     
-
-    
-    
-    
- 
-  
+    - oauth-server
+    - limits-service
+    environment:
+    - OAUTH2_SERVER_HOST=oauth-server
+    - LIMITS_SERVICE_HOST=limits-service
